@@ -47,8 +47,13 @@ public class MonthlyAttendanceServiceImpl implements MonthlyAttendanceService {
 	public MonthlyAttedance saveMonthlyAttedance(MonthlyAttendanceDto dto) throws Exception {
 		MonthlyAttedance attedance = new MonthlyAttedance(dto);
 
-		GenericResponse employeeData = restEmployeeService.getEmployeById(attedance.getEmployeeId());
+		GenericResponse employeeData = null;
+		try {
+			employeeData = restEmployeeService.getEmployeById(attedance.getEmployeeId());
 
+		} catch (Exception e) {
+			throw new Exception("Employee not found with employee Id : " + attedance.getEmployeeId());
+		}
 		Map<String, Object> employee = (Map<String, Object>) employeeData.getData();
 
 		Map<String, Object> personalDetails = (Map<String, Object>) employee.get("personalDetails");

@@ -23,7 +23,6 @@ pipeline {
                 bat "copy /Y target\\Attendance.jar G:\\HRMS_API\\Attendance"
             }
         }
-     
     }
     post {
         always {
