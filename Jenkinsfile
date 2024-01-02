@@ -23,11 +23,11 @@ pipeline {
                 bat "copy /Y target\\Attendance.jar G:\\HRMS_API\\Attendance"
             }
         }
-
-        stage('Run Employee Service') {
-            steps {            
-                bat "nssm start Attendance"
-            }
+     
+    }
+    post {
+        always {
+           bat "nssm start Attendance"
         }
     }
 }
