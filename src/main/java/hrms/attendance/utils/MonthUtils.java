@@ -39,4 +39,38 @@ public class MonthUtils {
 		}
 
 	}
+
+	public static MonthName convertMonthName(String monthName) {
+
+		switch (monthName.toUpperCase()) {
+		case "JANUARY":
+			return MonthName.JANUARY;
+		case "FEBRUARY":
+			return MonthName.FEBRUARY;
+		case "MARCH":
+			return MonthName.MARCH;
+		case "APRIL":
+			return MonthName.APRIL;
+		case "MAY":
+			return MonthName.MAY;
+		case "JUNE":
+			return MonthName.JUNE;
+		case "JULY":
+			return MonthName.JULY;
+		case "AUGUST":
+			return MonthName.AUGUST;
+		case "SEPTEMBER":
+			return MonthName.SEPTEMBER;
+		case "OCTOBER":
+			return MonthName.OCTOBER;
+		case "NOVEMBER":
+			return MonthName.NOVEMBER;
+		case "DECEMBER":
+			return MonthName.DECEMBER;
+		default:
+			throw new IllegalArgumentException("Invalid month name " + monthName);
+		}
+
+	}
+
 }

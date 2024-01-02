@@ -11,4 +11,6 @@ import hrms.attendance.enums.MonthName;
 @Repository
 public interface MonthlyAttendanceRepository extends JpaRepository<MonthlyAttedance, Long> {
 	List<MonthlyAttedance> findByMonthName(MonthName monthName);
+
+	List<MonthlyAttedance> findByEmployeeIdAndMonthName(Long employeeId, MonthName monthName);
 }

@@ -1,5 +1,6 @@
 package hrms.attendance.entity;
 
+import hrms.attendance.dto.MonthlyAttendanceDto;
 import hrms.attendance.enums.MonthName;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -33,5 +34,13 @@ public class MonthlyAttedance {
 	private int paidLeave;
 
 	private int employeeWorkingDay;
+
+	public MonthlyAttedance() {
+	}
+
+	public MonthlyAttedance(MonthlyAttendanceDto dto) {
+		this.employeeId = dto.getEmployeeId();
+
+	}
 
 }

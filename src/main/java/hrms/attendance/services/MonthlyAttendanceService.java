@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import hrms.attendance.dto.MonthlyAttendanceDto;
+import hrms.attendance.entity.MonthlyAttedance;
 
 @Service
 public interface MonthlyAttendanceService {
@@ -15,4 +16,6 @@ public interface MonthlyAttendanceService {
 	List<String> uploadCsvHeaders();
 
 	String uploadMonthlyAttendance(InputStream inputStream);
+
+	MonthlyAttedance saveMonthlyAttedance(MonthlyAttendanceDto dto) throws Exception;
 }
