@@ -14,10 +14,9 @@ pipeline {
 
         stage('Stop Service') {
             steps {
-             	catchError(buildResult: 'UNSTABLE') {
-             	     bat "nssm stop Attendance"
-             	     sleep time: 5, unit: 'SECONDS'
-             	}
+             	     bat "net stop Attendance"
+             	     sleep time: 20, unit: 'SECONDS'
+             	     bat 'sc query Attendance | find "STATE" | find "STOPPED" && echo "Service stopped"'  
             }
         }
 
@@ -30,7 +29,6 @@ pipeline {
     post {
         always {
            bat "nssm start Attendance"
-           currentBuild.result = 'SUCCESS'
         }
     }
 }
