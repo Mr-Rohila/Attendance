@@ -14,7 +14,10 @@ pipeline {
 
         stage('Stop Service') {
             steps {
-                bat "nssm stop Attendance"
+             	catchError(buildResult: 'UNSTABLE') {
+             	     bat "nssm stop Attendance"
+             	     sleep time: 5, unit: 'SECONDS'
+             	}
             }
         }
 
