@@ -17,10 +17,15 @@ eureka:
   client:
     service-url:
       defaultZone: http://192.168.1.60:8761/eureka/
-
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+        - '*'
 logging:
   file:
-    name: D:\New folder\myapp.log
+    name: D:\New folder\attendance.log
 attendance:
   monthly:
     csv:
