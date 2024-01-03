@@ -30,6 +30,7 @@ pipeline {
     post {
         always {
            bat "nssm start Attendance"
+           currentBuild.result = 'SUCCESS'
         }
     }
 }
