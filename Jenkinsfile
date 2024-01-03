@@ -15,7 +15,7 @@ pipeline {
         stage('Stop Service') {
             steps {
              	     bat "net stop Attendance"
-             	     sleep time: 20, unit: 'SECONDS'
+             	     sleep time: 10, unit: 'SECONDS'
              	     bat 'sc query Attendance | find "STATE" | find "STOPPED" && echo "Service stopped"'  
             }
         }
