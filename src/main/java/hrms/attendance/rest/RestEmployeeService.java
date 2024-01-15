@@ -12,6 +12,6 @@ import hrms.attendance.dto.GenericResponse;
 public interface RestEmployeeService {
 
 	@GetMapping("employee//{employeeId}")
-	GenericResponse getEmployeById(@PathVariable Long employeeId);
+	GenericResponse getEmployeById(@PathVariable Long employeeId) throws Exception;
 
 }

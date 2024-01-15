@@ -33,12 +33,7 @@ public class MonthlyAttendanceController {
 	private final MonthlyAttendanceService monthlyAttendanceService;
 
 	@GetMapping("/{monthValue}")
-	public GenericResponse monthlyAttendance(@PathVariable(required = false) Integer monthValue) throws Exception {
-
-		MonthlyAttendanceDto dto = new MonthlyAttendanceDto();
-
-		dto.setEmployeeId(1L);
-		monthlyAttendanceService.saveMonthlyAttedance(dto);
+	public GenericResponse monthlyAttendance(@PathVariable(required = false) Integer monthValue) {
 
 		List<MonthlyAttendanceDto> monthlyAttendance = monthlyAttendanceService.monthlyAttendance(monthValue);
 		return GenericResponse.builder().data(monthlyAttendance).build();

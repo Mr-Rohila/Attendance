@@ -1,4 +1,6 @@
 server:
+  servlet:
+    context-path: /
   port: 8082
 spring:
   datasource:
@@ -17,6 +19,15 @@ eureka:
   client:
     service-url:
       defaultZone: http://192.168.1.60:8761/eureka/
+ 
+
+
+springdoc:
+  api-docs:
+    path: /attendance/v3/api-docs    
+  swagger-ui:
+    path: /attendance/
+    
 management:
   endpoints:
     web:
@@ -26,6 +37,8 @@ management:
 logging:
   file:
     name: D:\New folder\attendance.log
+    
+    
 attendance:
   monthly:
     csv:

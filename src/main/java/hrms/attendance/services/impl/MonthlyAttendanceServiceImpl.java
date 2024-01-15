@@ -14,6 +14,7 @@ import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 import org.springframework.stereotype.Component;
 
+import feign.FeignException;
 import hrms.attendance.dto.GenericResponse;
 import hrms.attendance.dto.MonthlyAttendanceDto;
 import hrms.attendance.entity.MonthlyAttedance;
@@ -51,7 +52,7 @@ public class MonthlyAttendanceServiceImpl implements MonthlyAttendanceService {
 		try {
 			employeeData = restEmployeeService.getEmployeById(attedance.getEmployeeId());
 
-		} catch (Exception e) {
+		} catch (FeignException e) {
 			throw new Exception("Employee not found with employee Id : " + attedance.getEmployeeId());
 		}
 		Map<String, Object> employee = (Map<String, Object>) employeeData.getData();
@@ -76,51 +77,38 @@ public class MonthlyAttendanceServiceImpl implements MonthlyAttendanceService {
 	}
 
 	@Override
-	public String uploadMonthlyAttendance(InputStream inputStream) {
+	public String uploadMonthlyAttendance(InputStream inputStream) throws CSVErrorException, IOException {
 
-		StringBuffer errorTxt = new StringBuffer();
+		StringBuilder errorTxt = new StringBuilder();
 
-		try (final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream))) {
-			String[] headers = Arrays.stream(keys.getMonthlyCsvHeader()).map(String::trim).toArray(String[]::new);
+		final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+		String[] headers = Arrays.stream(keys.getMonthlyCsvHeader()).map(String::trim).toArray(String[]::new);
 
-			CSVFormat csvFormat = CSVFormat.DEFAULT.builder().setHeader(headers).setIgnoreHeaderCase(true).setTrim(true)
-					.build();
-			CSVParser csvParser = csvFormat.parse(bufferedReader);
+		CSVFormat csvFormat = CSVFormat.DEFAULT.builder().setHeader(headers).setIgnoreHeaderCase(true).setTrim(true)
+				.build();
+		CSVParser csvParser = csvFormat.parse(bufferedReader);
 
-			Iterable<CSVRecord> iterable = csvParser.getRecords();
-			int rowCount = 0;
-			for (CSVRecord record : iterable) {
-				rowCount++;
-				if (rowCount == 1) {
-					// Validate headers
-					try {
-						validateHeaders(record.toMap());
-						continue;
-					} catch (CSVErrorException e) {
-						// closed all resources
-						errorTxt.append("\t" + e.getMessage());
-						csvParser.close();
-						bufferedReader.close();
-						return errorTxt.toString();
-					}
-				} // header check end
+		Iterable<CSVRecord> iterable = csvParser.getRecords();
+		int rowCount = 0;
+		for (CSVRecord csvRecord : iterable) {
+			rowCount++;
+			if (rowCount == 1) {
 
-				try {
-					// read data
-					final MonthlyAttendanceDto dto = csvToMonthlyAttendanceDto(record);
-					// save data into database
-					saveMonthlyAttedance(dto);
-				} catch (Exception ex) {
-					errorTxt.append("\t Data  Error, row = " + (rowCount - 1) + " : " + ex.getMessage() + "\n");
-				}
+				// validate header
+				validateHeaders(csvRecord.toMap());
+				continue;
+			}
 
-			} // loop closed
+			try {
+				// read data
+				final MonthlyAttendanceDto dto = csvToMonthlyAttendanceDto(csvRecord);
+				// save data into database
+				saveMonthlyAttedance(dto);
+			} catch (Exception ex) {
+				errorTxt.append("\t Data  Error, row = " + (rowCount - 1) + " : " + ex.getMessage() + "\n");
+			}
 
-		} catch (IOException exception) {
-			exception.printStackTrace();
-			errorTxt.append("\t" + exception.getMessage()
-					+ " :  If you are face same issue multiple time contact Administrator");
-		}
+		} // loop closed
 
 		return errorTxt.toString();
 	}

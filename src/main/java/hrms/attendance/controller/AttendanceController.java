@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import hrms.attendance.dto.AttendanceDto;
+import hrms.attendance.dto.DailyAttendanceDto;
 import hrms.attendance.dto.GenericResponse;
 import lombok.RequiredArgsConstructor;
 
@@ -25,7 +25,8 @@ public class AttendanceController {
 	}
 
 	@PostMapping
-	public GenericResponse saveAttendance(@RequestBody AttendanceDto attendance) {
+	public GenericResponse saveAttendance(@RequestBody DailyAttendanceDto attendance) {
+
 		return GenericResponse.builder().message("Save Successfully").data(attendance).build();
 	}
 

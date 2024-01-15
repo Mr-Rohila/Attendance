@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
-public class AttendanceDto {
+public class DailyAttendanceDto {
 
 	@NotNull(message = "Employee Id can not be Empty")
 	private Long employeeId;
