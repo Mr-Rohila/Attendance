@@ -24,6 +24,12 @@ management:
       exposure:
         include:
         - '*'
+springdoc:
+  api-docs:
+    path: /attendance/v3/api-docs    
+  swagger-ui:
+    path: /attendance/
+    
 logging:
   file:
     name: G:\HRMS_API\Attendance\app.log
