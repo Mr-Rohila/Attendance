@@ -26,7 +26,7 @@ springdoc:
   api-docs:
     path: /attendance/v3/api-docs    
   swagger-ui:
-    path: /attendance/
+    path: /attendance
     
 management:
   endpoints:
