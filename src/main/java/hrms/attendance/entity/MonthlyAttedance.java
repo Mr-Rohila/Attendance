@@ -40,6 +40,12 @@ public class MonthlyAttedance {
 
 	public MonthlyAttedance(MonthlyAttendanceDto dto) {
 		this.employeeId = dto.getEmployeeId();
+		this.employeeName = dto.getEmployeeName();
+		this.monthName = dto.getMonthName();
+		this.publicHoliday = dto.getPublicHoliday();
+		this.totalWorkingDay = dto.getTotalWorkingDay();
+		this.paidLeave = dto.getPaidLeave();
+		this.employeeWorkingDay = dto.getEmployeeWorkingDay();
 
 	}
 
